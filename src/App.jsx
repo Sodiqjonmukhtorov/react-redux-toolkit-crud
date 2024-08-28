@@ -1,19 +1,22 @@
-import React from 'react';
-import Home from './Home';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Create from './Create';
-import Update from './Update';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const Home = React.lazy(() => import('./Home'));
+const Create = React.lazy(() => import('./Create'));
+const Update = React.lazy(() => import('./Update'));
 
 const App = () => {
     return (
-<BrowserRouter>
-<Routes>
-    <Route path="/" element={<Home />} />
-    <Route path='/create' element={<Create/>} />
-    <Route path='/edit/:id' element={<Update />} />
-</Routes>
-</BrowserRouter>
+        <BrowserRouter>
+            <Suspense fallback={<div>Yuklanmoqda...</div>}>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/create" element={<Create />} />
+                    <Route path="/edit/:id" element={<Update />} />
+                </Routes>
+            </Suspense>
+        </BrowserRouter>
     );
 };
 
